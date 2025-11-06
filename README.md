@@ -2,7 +2,7 @@
 Climate station analyses
 
 
-Data & QC pipeline (staged, idempotent)
+* Data & QC pipeline (staged, idempotent)
 
 All steps are versioned (*_vNNN.csv) and keep row_id so merges are traceable. We prefer conservative masking and keep reasons as qc_* flags.
 
@@ -31,13 +31,13 @@ Range and ordering checks; preferred *_clean retained.
 Step 9 – Assemble analysis_ready_vNNN.*
 Join the latest valid outputs, enforce known-broken masking, build __pref for all variables, and export ok_* booleans + all qc_* flags. Also writes a Parquet copy.
 
-Key artifacts
+* Key artifacts
 
 af_clean_v01/analysis_ready_vNNN.csv (and .parquet) — the single source for analyses.
 
 neighbors_manual.csv — optional lookup of neighbor node IDs for composite references.
 
-Feature engineering (what & why)
+* Feature engineering (what & why)
 
 VPD (from temperature and humidity): captures atmospheric drying power that drives plant water loss; more actionable than RH alone.
 
@@ -49,7 +49,8 @@ Seasons & DOY: seasonal context for stratified summaries and between-season cont
 
 Node-equal daily means (for gradient work): avoid coverage bias across nodes.
 
-Analysis design
+* Analysis design
+
 Q1 — AF vs Open (paired daily)
 
 Build daily site means and restrict to days with both AF & Open present (paired).
@@ -84,7 +85,8 @@ QC pipeline is doing its job: masked segments are traceable and derived from exp
 
 See outputs/figs/ and outputs/tables/ for exact plots/tables per question.
 
-How to run
+* How to run
+
 Option A — Colab
 
 Open each notebook in notebooks/ and run top-to-bottom. Upload or mount data, set DATA_ROOT, and execute.
@@ -97,7 +99,7 @@ jupyter lab
 
 Run 01_data_cleaning.ipynb to produce af_clean_v01/analysis_ready_vNNN.*, then proceed with 02_…, 03_…, 04_….
 
-Reproducibility & conventions
+* Reproducibility & conventions
 
 Versioned outputs (_vNNN) and row_id joins keep merges safe.
 
@@ -107,7 +109,7 @@ Plots export PNG + PDF with deterministic filenames.
 
 Randomized procedures (permutations/bootstraps) set seeds inside notebooks.
 
-Limitations & next steps
+* Limitations & next steps
 
 Coverage imbalance: some nodes have gaps—handled by node-equal means but still worth monitoring.
 
